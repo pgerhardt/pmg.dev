@@ -1,7 +1,8 @@
-baseURL: "https://pgerhardt.github.io/"
+baseURL: "https://pmg.dev/"
 title: "pmg.dev"
 theme: "PaperMod"
 languageCode: "en-us"
+canonifyURLs: true
 
 params:
   hidefooter: true
