@@ -1,0 +1,26 @@
+baseURL: "https://pgerhardt.github.io/"
+title: "pmg.dev"
+theme: "PaperMod"
+languageCode: "en-us"
+
+params:
+  hidefooter: true
+  defaultTheme: auto        # follow OS (light/dark)
+  disableThemeToggle: true  # hide the day/night switch
+  disableAnchoredHeadings: true
+  assets:
+    css:
+      - css/extended/reader.css
+  defaultTheme: light
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowBreadCrumbs: false
+
+menu:
+  main: []
+#menu:
+#  main:
+#    - name: About
+#      url: /about/
+#      weight: 1
+

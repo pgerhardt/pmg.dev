@@ -1,0 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap");
+html { font-size: 18px; }
+body { font-family: "Source Serif 4", ui-serif, Georgia, serif; line-height: 1.6; }
+h1,h2,h3,nav,.post-title { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .2px; }
+main { max-width: 720px; margin: 0 auto; }
