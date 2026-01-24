@@ -12,3 +12,6 @@ I work on secure hardware for cryptographic key storage.
 - [arx.org](https://arx.org) — secure-chip manufacturer
 - [offline.cash](https://offline.cash) / [kong.cash](https://kong.cash) — physical cash prototypes for network-state citizens
 - [trustlesscomputer.com](https://trustlesscomputer.com) — coming soon
+
+## Elsewhere
+X: [@pmg](https://x.com/pmg)
