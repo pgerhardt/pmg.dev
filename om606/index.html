@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Launch every version of the OM606 Powertrain Lab, from the original curve generator through the modular V7 interface."
+      content="Launch every version of the OM606 Powertrain Lab, from the original curve generator through the fixed-RPM transient V8 interface."
     />
     <title>OM606 Powertrain Lab — Version launcher</title>
     <style>
@@ -264,8 +264,8 @@
     <main class="launcher">
       <header class="launcher-header">
         <div>
-          <p class="eyebrow">OM606 Powertrain Lab · V1–V7</p>
-          <h1>Seven builds.<br />One laboratory.</h1>
+          <p class="eyebrow">OM606 Powertrain Lab · V1–V8</p>
+          <h1>Eight builds.<br />One laboratory.</h1>
           <p class="intro">
             Explore the project from its original boost-stack calculator to the
             modular TypeScript steady-state interface. Historical builds remain
@@ -283,12 +283,13 @@
               <option value="v4">V4 — Dynamic vehicle simulation</option>
               <option value="v5">V5 — Maps, launch control, optimizer</option>
               <option value="v6">V6 — Calibration and uncertainty</option>
-              <option value="v7">V7 — Modular TypeScript steady-state interface</option>
+              <option value="v7">V7 — Modular steady-state interface</option>
+              <option value="v8">V8 — Fixed-RPM transient response</option>
             </select>
           </div>
           <a
             class="standalone-link"
-            href="v7/"
+            href="v8/"
             id="standalone-link"
             rel="noopener"
             target="_blank"
@@ -298,7 +299,7 @@
           <p class="version-copy">
             <span class="version-badge" id="version-badge">Documentation</span>
             <span id="version-description">
-              The current modular React interface over the extracted V6-compatible model.
+              Fixed-RPM turbo response added to the modular React interface.
             </span>
           </p>
         </div>
@@ -307,15 +308,15 @@
       <section class="viewer" aria-label="Selected OM606 Powertrain Lab version">
         <iframe
           id="version-frame"
-          src="v7/"
-          title="V7 — Modular TypeScript steady-state interface"
+          src="v8/"
+          title="V8 — Fixed-RPM transient response"
         ></iframe>
       </section>
     </main>
 
     <script>
       const STORAGE_KEY = "om606-launcher-version";
-      const DEFAULT_VERSION = "v7";
+      const DEFAULT_VERSION = "v8";
       const versions = {
         v1: {
           title: "V1 — Boost stack curve generator",
@@ -355,10 +356,17 @@
           documentation: false,
         },
         v7: {
-          title: "V7 — Modular TypeScript steady-state interface",
+          title: "V7 — Modular steady-state interface",
           description:
-            "The current modular React interface over the extracted V6-compatible model.",
+            "The frozen modular React steady-state interface with Metric and Imperial display units.",
           url: "v7/",
+          documentation: false,
+        },
+        v8: {
+          title: "V8 — Fixed-RPM transient response",
+          description:
+            "Fixed-RPM turbo response added to the modular React interface.",
+          url: "v8/",
           documentation: false,
         },
       };
