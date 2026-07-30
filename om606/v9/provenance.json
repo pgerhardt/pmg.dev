@@ -1,0 +1,9 @@
+{
+  "version": 9,
+  "sourceCommit": "4a4afd68f89fd87e4130c5c8cd66cecd22ac2e53",
+  "publicRoute": "/om606/v9/",
+  "buildCommand": "npm ci && npm run build",
+  "nodeRequirement": ">=22.13.0",
+  "packageManager": "npm@10.9.8",
+  "checksumAlgorithm": "SHA-256"
+}
