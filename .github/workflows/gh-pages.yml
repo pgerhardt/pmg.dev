@@ -17,6 +17,7 @@ jobs:
       - name: Checkout pmg.dev
         uses: actions/checkout@v4
         with:
+          submodules: recursive
           fetch-depth: 0
 
       - name: Read OM606 revision
@@ -70,6 +71,12 @@ jobs:
 
       - name: Build Hugo
         run: hugo --minify --cleanDestinationDir
+
+      - name: Verify Hugo homepage
+        shell: bash
+        run: |
+          test -f public/index.html
+          test -f public/index.xml
 
       - name: Install OM606 artifact
         shell: bash
