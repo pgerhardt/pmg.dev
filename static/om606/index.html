@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>OM606 Powertrain Lab — Version Archive</title>
+<style>
+:root{color-scheme:dark;--bg:#080b0f;--panel:#11161d;--line:#29323e;--text:#edf2f7;--muted:#9aa7b5;--accent:#e3b341}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:grid;grid-template-rows:auto 1fr}.bar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}.brand{font-weight:700;margin-right:8px}.label{color:var(--muted)}select,button,a.button{background:#0d1218;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;text-decoration:none}select{min-width:250px}button,a.button{cursor:pointer}.meta{color:var(--muted);min-width:260px;flex:1}.stage{min-height:0;position:relative}.stage iframe{display:block;width:100%;height:100%;border:0;background:#fff}.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);pointer-events:none}.hidden{display:none}@media(max-width:700px){.bar{align-items:stretch}.brand{width:100%}select{min-width:0;flex:1}.meta{width:100%;min-width:0}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand">OM606 Powertrain Lab</div>
+  <div class="label">Version</div>
+  <select id="version">
+    <option value="v1">V1 — Boost stack curve generator</option>
+    <option value="v2">V2 — Engineering specification</option>
+    <option value="v3">V3 — Physics-based steady-state model</option>
+    <option value="v4">V4 — Dynamic vehicle simulation</option>
+    <option value="v5">V5 — Maps, launch control, optimizer</option>
+    <option value="v6" selected>V6 — Calibration and uncertainty</option>
+  </select>
+  <div class="meta" id="meta"></div>
+  <button id="reload" type="button">Reload</button>
+  <a id="standalone" class="button" target="_blank" rel="noopener">Open standalone</a>
+</header>
+<main class="stage">
+  <div id="loading" class="loading">Loading version…</div>
+  <iframe id="app" title="Selected OM606 Powertrain Lab version"></iframe>
+</main>
+<script>
+const versions={
+ v1:{file:'versions/v1.html',meta:'Original additive torque and horsepower curve generator.'},
+ v2:{file:'versions/v2.html',meta:'Specification checkpoint; no runnable application existed.'},
+ v3:{file:'versions/v3.html',meta:'Air/fuel ceilings, compressor losses, P2 envelope, and vehicle outputs.'},
+ v4:{file:'versions/v4.html',meta:'Time-domain pull, shifts, SOC, thermal state, and compressor staging.'},
+ v5:{file:'versions/v5.html',meta:'Turbo-map sanity, energy accounting, launch control, and architecture optimizer.'},
+ v6:{file:'versions/v6.html',meta:'Dyno calibration, residuals, Monte Carlo bands, and sensitivity analysis.'}
+};
+const select=document.getElementById('version');
+const frame=document.getElementById('app');
+const meta=document.getElementById('meta');
+const standalone=document.getElementById('standalone');
+const loading=document.getElementById('loading');
+function selectedFromLocation(){
+ const hash=location.hash.replace('#','');
+ if(versions[hash]) return hash;
+ const saved=localStorage.getItem('om606.selectedVersion');
+ return versions[saved]?saved:'v6';
+}
+function loadVersion(key,replace=false){
+ const item=versions[key]||versions.v6;
+ select.value=key;
+ meta.textContent=item.meta;
+ standalone.href=item.file;
+ loading.classList.remove('hidden');
+ frame.src=item.file;
+ localStorage.setItem('om606.selectedVersion',key);
+ if(replace) history.replaceState(null,'','#'+key); else history.pushState(null,'','#'+key);
+}
+select.addEventListener('change',()=>loadVersion(select.value));
+document.getElementById('reload').addEventListener('click',()=>{loading.classList.remove('hidden');frame.src=frame.src});
+frame.addEventListener('load',()=>loading.classList.add('hidden'));
+addEventListener('hashchange',()=>{const key=selectedFromLocation();if(key!==select.value)loadVersion(key,true)});
+loadVersion(selectedFromLocation(),true);
+</script>
+</body>
+</html>
