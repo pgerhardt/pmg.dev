@@ -1,36 +1,93 @@
-# .github/workflows/gh-pages.yml
-name: Deploy Hugo to GitHub Pages
+name: Build and deploy pmg.dev
 
 on:
+  pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: write   # was 'read' → cannot create gh-pages
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout pmg.dev
+        uses: actions/checkout@v4
         with:
-          submodules: true
           fetch-depth: 0
 
-      - uses: peaceiris/actions-hugo@v3
+      - name: Read OM606 revision
+        id: om606
+        shell: bash
+        run: |
+          ref="$(tr -d '[:space:]' < dependencies/om606.ref)"
+
+          if [[ ! "$ref" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Invalid OM606 commit SHA: $ref" >&2
+            exit 1
+          fi
+
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout OM606 Powertrain Lab
+        uses: actions/checkout@v4
+        with:
+          repository: pgerhardt/om606-powertrain-lab
+          ref: ${{ steps.om606.outputs.ref }}
+          path: _dependencies/om606
+          token: ${{ secrets.OM606_READ_TOKEN }}
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.0'
+          cache: npm
+          cache-dependency-path: _dependencies/om606/package-lock.json
+
+      - name: Build OM606 Powertrain Lab
+        working-directory: _dependencies/om606
+        run: |
+          npm ci
+          npm run build:site
+
+      - name: Verify OM606 artifact
+        shell: bash
+        run: |
+          test -f _dependencies/om606/dist/site/om606/index.html
+          test -f _dependencies/om606/dist/site/om606/v7/index.html
+          test -f _dependencies/om606/dist/site/om606/versions/v1.html
+          test -f _dependencies/om606/dist/site/om606/versions/v6.html
+
+      - name: Set up Hugo
+        uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.146.0'
           extended: true
 
-      - name: Build
-        run: hugo --minify
+      - name: Build Hugo
+        run: hugo --minify --cleanDestinationDir
+
+      - name: Install OM606 artifact
+        shell: bash
+        run: |
+          rm -rf public/om606
+          mkdir -p public/om606
+
+          rsync -a --delete \
+            _dependencies/om606/dist/site/om606/ \
+            public/om606/
+
+          test -f public/om606/index.html
+          test -f public/om606/v7/index.html
 
       - name: Deploy
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          publish_branch: gh-pages       # be explicit
-          # cname: pmg.dev               # use this OR keep static/CNAME (not both)
-
+          publish_branch: gh-pages
