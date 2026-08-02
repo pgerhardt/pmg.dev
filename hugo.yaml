@@ -10,6 +10,9 @@ params:
   disableThemeToggle: true  # hide the day/night switch
   disableAnchoredHeadings: true
   assets:
+    favicon: "/favicon.svg"
+    favicon16x16: "/favicon.svg"
+    favicon32x32: "/favicon.svg"
     css:
       - css/extended/reader.css
   defaultTheme: light
