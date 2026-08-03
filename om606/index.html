@@ -264,8 +264,8 @@
     <main class="launcher">
       <header class="launcher-header">
         <div>
-          <p class="eyebrow">OM606 Powertrain Lab · V1–V11</p>
-          <h1>Eleven builds.<br />One laboratory.</h1>
+          <p class="eyebrow">OM606 Powertrain Lab · V1–V12</p>
+          <h1>Twelve builds.<br />One laboratory.</h1>
           <p class="intro">
             Explore the project from its original boost-stack calculator to the
             modular TypeScript steady-state interface. Historical builds remain
@@ -288,11 +288,12 @@
               <option value="v9">V9 — Longitudinal vehicle simulation</option>
               <option value="v10">V10 — Electrical and thermal endurance</option>
               <option value="v11">V11 — Compressor staging and maps</option>
+              <option value="v12">V12 — Launch and architecture optimizer</option>
             </select>
           </div>
           <a
             class="standalone-link"
-            href="v11/"
+            href="v12/"
             id="standalone-link"
             rel="noopener"
             target="_blank"
@@ -302,7 +303,7 @@
           <p class="version-copy">
             <span class="version-badge" id="version-badge">Documentation</span>
             <span id="version-description">
-              Compressor maps, corrected flow and speed, surge/choke margins, staging, intercooling and stage-by-stage energy accounting.
+              Clutch, tire-slip and launch dynamics with constrained architecture search, ranked candidates and Pareto tradeoffs.
             </span>
           </p>
         </div>
@@ -311,15 +312,15 @@
       <section class="viewer" aria-label="Selected OM606 Powertrain Lab version">
         <iframe
           id="version-frame"
-          src="v11/"
-          title="V11 — Compressor staging and maps"
+          src="v12/"
+          title="V12 — Launch and architecture optimizer"
         ></iframe>
       </section>
     </main>
 
     <script>
       const STORAGE_KEY = "om606-launcher-version";
-      const DEFAULT_VERSION = "v11";
+      const DEFAULT_VERSION = "v12";
       const versions = {
         v1: {
           title: "V1 — Boost stack curve generator",
@@ -391,6 +392,13 @@
           description:
             "Compressor maps, corrected flow and speed, surge/choke margins, staging, intercooling and stage-by-stage energy accounting.",
           url: "v11/",
+          documentation: false,
+        },
+        v12: {
+          title: "V12 — Launch and architecture optimizer",
+          description:
+            "Clutch, tire-slip and launch dynamics with constrained architecture search, ranked candidates and Pareto tradeoffs.",
+          url: "v12/",
           documentation: false,
         },
       };
